@@ -1,0 +1,12 @@
+div.cabecera{
+       height: 150px;
+       background-color: #053b47;
+}
+div.__bloqueImagenPrincipal{
+         height: 600px;
+         div.__imgPrincipal{
+            height: 600px;
+            background-image: url(../img/carpint.jpg);
+            background-size: cover;
+         }        
+}
