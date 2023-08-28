@@ -1,0 +1,19 @@
+.navConteiner ul{
+    display: flex;
+}
+.navConteiner ul li{
+    text-decoration: none;
+    
+}
+div .imgCarrito{
+    margin-right: 155px;
+}
+div .imgCarrito div {
+    background-color: cadetblue;
+    border-radius: 100%;
+    width: 32px;
+    height: 32px;
+}
+div .imgCarrito div span{
+    color: aliceblue;
+}
