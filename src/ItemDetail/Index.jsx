@@ -1,8 +1,9 @@
 /* eslint-disable react/prop-types */
 import { Card, Button } from "react-bootstrap"
-export default function ItemDetail({ detail }) {
+import ItemCount from "../ItemCount/ItemCount";
+export default function ItemDetail({ detail }, {contador}) {
   return (
-    <div className="d-flex justify-content-center">
+    <div className="d-flex justify-content-center ">
       <Card style={{ width: '18rem' }}>
         <Card.Img variant="top" src={detail[0].rutaImg} className="img-fluid" />
         <Card.Body>
@@ -13,7 +14,12 @@ export default function ItemDetail({ detail }) {
               <span className="fw-bold">{detail[0].precio} </span>
             </div>
           </div>
-          <Button variant="primary">AGREGAR</Button>
+          <div className="d-flex justify-content-between align-items-center">
+            <ItemCount/>
+            <div>
+              <Button variant="primary">AGREGAR</Button>
+            </div>
+          </div>
         </Card.Body>
       </Card>
     </div>

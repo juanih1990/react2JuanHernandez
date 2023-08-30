@@ -1,22 +1,19 @@
 .alink {
         text-decoration: none;
-        color: white !important;
+        color: rgb(252, 252, 252) !important;
 }
-
-div .imgCarrito {
+.Carrito {
         margin-right: 155px;
 }
-
-div .imgCarrito div {
-        background-color: cadetblue;
+div.Carrito div {
+        background-color: cadetblue !important;
         border-radius: 100%;
         width: 32px;
         height: 32px;
 }
-
-div .imgCarrito div span {
+div.Carrito div span {
         color: aliceblue;
 }
-.ml3{
+.ml3 {
         margin-left: 50px;
 }
