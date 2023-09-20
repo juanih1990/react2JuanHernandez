@@ -7,18 +7,25 @@ import {
   Link,
 } from "react-router-dom";
 import ItemListContainers from "../ItemListContainer/Index";
-import ItemDetailContainer from "../ItemDetailContainer"
+import ItemDetailContainer from "../ItemDetailContainer";
+import ShopComponentContext from "../context/shopContext"
+import Order from "../Order";
+
+
 
 const RouteIndex = () => {
   return (
-    <BrowserRouter>
-     <NavBar />
-      <Routes>
-        <Route path="/" element={<ItemListContainers />} />
-        <Route path="/categoria/:categoria" element={<ItemListContainers />} />
-        <Route path="/id/:id" element={<ItemDetailContainer/>} />
-      </Routes>
-    </BrowserRouter>
+    <ShopComponentContext>
+      <BrowserRouter>
+        <NavBar />
+        <Routes>
+          <Route path="/" element={<ItemListContainers />} />
+          <Route path="/categoria/:categoria" element={<ItemListContainers />} />
+          <Route path="/id/:id" element={<ItemDetailContainer />} />
+          <Route path="/carrito" element={<Order />} />
+        </Routes>
+      </BrowserRouter>
+    </ShopComponentContext>
   );
 
 }
