@@ -1,4 +1,4 @@
-import Route from "./Route/Index"
+import Route from "./components/Route/Index"
 function App() {
   return (
     <>   
