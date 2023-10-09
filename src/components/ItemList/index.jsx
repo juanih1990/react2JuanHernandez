@@ -5,25 +5,41 @@ import styles from "./style.module.css"
 import { CartContext } from "../context/CartContext"
 import { useParams } from 'react-router-dom'
 import toast, { Toaster } from 'react-hot-toast'
+import { db } from "../firebase/client"
+import { getDocs, collection, query, where } from "firebase/firestore"
 
-const itemList = () => {
+const itemList = ({ productos }) => {
     const estadoContext = useContext(CartContext)
+    const [items, setItems] = useState([]);
     const { categoria } = useParams()
-
     const notify = () => toast.success('Se agrego la compra al carrito!!')
 
+    useEffect(()=>{
+        setItems(productos)
+    }, [productos])
+
     useEffect(() => {
-        estadoContext.setCategory(categoria);
+        const productFilter = query(
+            collection(db, "products"),
+            where("category", "==", `${categoria}`),
+        )
+        const dataFilter = async () => {
+            const data = await getDocs(productFilter)
+            const dataFilter = data.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
+            dataFilter.length > 0 && setItems(dataFilter) 
+        }
+        dataFilter()
     }, [categoria])
+
     return (
         <>
 
-            {estadoContext.item.length > 0 ? (
+            {items.length > 0 ? (
                 <Container className="d-flex justify-content-center align-items-center">
                     <Row>
                         {
-                            estadoContext.item.map(prod => (
-                                <Col key={prod.categoryid} xs={12} sm={12} md={12} lg={estadoContext.item.length > 2 ? 3 : 5} className="m-3">
+                            items.map(prod => (
+                                <Col key={prod.categoryid} xs={12} sm={12} md={12} lg={items.length > 2 ? 3 : 5} className="m-3">
                                     <Card key={prod.categoryid} style={{ width: '18rem' }} >
                                         <Card.Img variant="top" src={prod.image} className="img-fluid" />
                                         <Card.Body>

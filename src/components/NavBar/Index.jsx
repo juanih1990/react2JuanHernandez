@@ -1,6 +1,6 @@
-import { Navbar, Nav, Container, Button } from 'react-bootstrap';
+import { Navbar, Nav, Container } from 'react-bootstrap';
 import { Link } from "react-router-dom";
-import CartWidget from '../CartWidget/CartWidget';
+import Cart from '../CartWidget/Cart';
 import styles from "./style.module.css"
 const NavBar = () => {
   
@@ -21,7 +21,7 @@ const NavBar = () => {
           </Navbar.Collapse>
         </Container>
       </Navbar>
-      <CartWidget/>
+      <Cart/>
     </div>
   )
 }

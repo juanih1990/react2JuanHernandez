@@ -1,7 +1,7 @@
 import React from 'react'
-import { createContext, useState, useEffect } from 'react'
+import { createContext, useState } from 'react'
 import { db } from "../firebase/client"
-import { getDocs, collection, query, where, limit, getDoc, doc, addDoc } from "firebase/firestore"
+import { getDocs, collection, addDoc } from "firebase/firestore"
 
 export const CartContext  = createContext()
 
@@ -15,15 +15,7 @@ const CartProvider  = ({ children }) => {
     const [precioTotal, setTotal] = useState(0)
     const [user, setUser] = useState({})
 
-    const cargarDatos = () => {
-        const dataAll = async () => {
-            const productsRef = collection(db, "products")
-            const data = await getDocs(productsRef)
-            const dataAll = data.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
-            setItem(dataAll)
-        }
-        dataAll()
-    }
+
 
     const datosOrdenCompra = () => {
         const dataAllDetailCompra = async () => {
@@ -35,32 +27,7 @@ const CartProvider  = ({ children }) => {
         }
         dataAllDetailCompra()
     }
-
-    useEffect(() => {
-        const productFilter = query(
-            collection(db, "products"),
-            where("category", "==", `${category}`),
-        )
-        const dataFilter = async () => {
-            const data = await getDocs(productFilter)
-            const dataFilter = data.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
-            dataFilter.length > 0 ? setItem(dataFilter) : cargarDatos()
-        }
-        dataFilter()
-    }, [category])
-
-    useEffect(() => {
-        const productFilterIDdetail = query(
-            collection(db, "products"),
-            where("categoryid", "==", `${ID}`)
-        )
-        const dataFilterIDdetail = async () => {
-            const data = await getDocs(productFilterIDdetail)
-            const dataFilter = data.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
-            dataFilter.length > 0 ? setItem(dataFilter) : cargarDatos()
-        }
-        dataFilterIDdetail()
-    }, [ID])
+   
 
     const getCarrito = (cont, operacion) => {
         if (operacion) {

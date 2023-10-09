@@ -8,18 +8,6 @@
     text-decoration: none;
     color: rgb(252, 252, 252) !important;
 }
-.Carrito {
-    margin-right: 155px;
-}
-div.Carrito div {
-    background-color: cadetblue !important;
-    border-radius: 100%;
-    width: 32px;
-    height: 32px;
-}
-div.Carrito div span {
-    color: aliceblue;
-}
 .ml3 {
     margin-left: 50px;
 }
