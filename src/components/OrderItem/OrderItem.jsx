@@ -8,7 +8,7 @@ import styles from "./style.module.css"
 const OrderItem = () => {
   ////////
   const { register , handleSubmit, 
-    formState: { errors }, watch , setValue , reset} = useForm()
+    formState: { errors },  reset} = useForm()
  ////////
   const orderContext = useContext(CartContext)
   const handleFinalizarCompra = () => {
