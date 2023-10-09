@@ -7,43 +7,19 @@ import Swal from 'sweetalert2';
 import styles from "./style.module.css"
 const OrderItem = () => {
   ////////
-  const { register  , 
-  formState: { errors }, watch } = useForm()
- 
+  const { register , handleSubmit, 
+    formState: { errors }, watch , setValue , reset} = useForm()
  ////////
   const orderContext = useContext(CartContext)
-  const [formData, setFormData] = useState({
-    Nombre: '',
-    Celular: '',
-    Email: '',
-  })
-
-  const resetForm = () => {
-    setFormData({
-      Nombre: '',
-      Celular: '',
-      Email: '',
-    })
-  }
-
-  const handleChange = (event) => {
-    const { name, value } = event.target
-    setFormData({ ...formData, [name]: value })
-  }
-
   const handleFinalizarCompra = () => {
-    const formValid = formData.Nombre && formData.Celular && formData.Email;
-    if (formValid && (orderContext.compra.length > 0)) {
-      orderContext.setUsers(formData)
+    if ((orderContext.compra.length > 0)) {
       Swal.fire({
         icon: 'success',
         title: '¡Compra finalizada!',
         text: 'Gracias por tu compra.',
       });
       orderContext.finalizarCompra()
-      resetForm()
       orderContext.clearCarrito()
-
     }
     else {
       Swal.fire({
@@ -60,7 +36,10 @@ const OrderItem = () => {
     }, 0)
     orderContext.setTotal(totalPrecio)
   }
-
+  const onSubmit = handleSubmit((data) => {
+    handleFinalizarCompra()
+    reset()
+  }) 
   useEffect(() => {
     calcularTotal()
   }, [orderContext.compra])
@@ -68,21 +47,7 @@ const OrderItem = () => {
 
   return (
     <>
-      <Form className="container-fluid w-50">
-        <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-          <Form.Label >Nombre</Form.Label>
-          <Form.Control type="text" placeholder="Nombre" name="Nombre" value={formData.Nombre} onChange={handleChange}  />
-        </Form.Group>
-        <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-          <Form.Label>Celular</Form.Label>
-          <Form.Control type="text" placeholder="Celular" name="Celular" value={formData.Celular} onChange={handleChange} />
-        </Form.Group>
-        <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-          <Form.Label>Email address</Form.Label>
-          <Form.Control type="email" placeholder="name@example.com" name="Email" value={formData.Email} onChange={handleChange} />
-        </Form.Group>
-      </Form>
-      <Table striped bordered hover>
+       <Table striped bordered hover>
         <thead>
           <tr>
             <th>#</th>
@@ -124,11 +89,89 @@ const OrderItem = () => {
         </tfoot>
 
       </Table>
-      <div className="d-flex justify-content-center">
-        <Button variant="success" onClick={() => {
+      <Form className="container-fluid w-50" onSubmit={onSubmit}>
+        {/* nombre */}
+        <Form.Group className="mb-3" >
+          <Form.Label htmlFor="nombre" >Nombre</Form.Label>
+          <Form.Control type="text" placeholder="Nombre" name="Nombre"   
+          {...register("nombre", {
+            required:{
+              value: true ,
+              message: "El nombre es requerido"
+           } ,
+            minLength: {
+              value: 2,
+              message: "El nombre debe tener al menos 2 caracteres"
+           },
+            maxLength: {
+              value: 20,
+              message: "El nombre no puede superar los 20 caracteres"
+           }
+          })}
+          />
+           {
+          errors.nombre && <span className={`${styles['errorMessage']}`}> {errors.nombre.message}</span>
+        }
+        
+        </Form.Group>
+        
+       
+         {/* celular */}
+        <Form.Group className="mb-3" >
+          <Form.Label htmlFor="celular">Celular</Form.Label>
+          <Form.Control type="text" placeholder="Celular" name="Celular"  
+           {...register("celular", { 
+            required: { 
+              value: true,
+              message: "El celular es requerido"
+            }, 
+            minLength: {
+              value: 2,
+              message: "Debe tener al menos 6 numeros"
+           },
+            maxLength: {
+              value: 20,
+              message: "No puede superar los 15 numeros"
+           },
+           pattern: {
+            value: /^[0-9]+$/,
+            message: "Este campo solo acepta numeros",
+          }
+          })} 
+           />
+           {
+          errors.celular && <span className={`${styles['errorMessage']}`}> {errors.celular.message}</span>
+        }
+        </Form.Group>
+
+        {/* correo */}
+        <Form.Group className="mb-3"> {/*  controlId="correo" */}
+          <Form.Label  htmlFor="correo">Email address</Form.Label>
+          <Form.Control type="email" placeholder="name@example.com" name="Email"  
+           {...register("correo", {
+            required: {
+               value: true,
+               message: "El correo es requerido"
+            },
+            pattern: {
+               value: /^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/,
+               message: "El correo no cumple con el patron"
+            }
+           })}  />
+           {
+          errors.correo && <span className={`${styles['errorMessage']}`}> {errors.correo.message}</span>
+        }
+        </Form.Group>
+        <div className="d-flex justify-content-center">
+        <Button  type="submit"  variant="success" >FINALIZAR COMPRA</Button>
+
+        {/*<Button  type="submit"  variant="success"  onClick={() => {
           handleFinalizarCompra();
-        }}>FINALIZAR COMPRA</Button>
+        }}>FINALIZAR COMPRA</Button> */}
       </div>
+      </Form>
+   
+     
           <Brief></Brief>
     </>
   )
