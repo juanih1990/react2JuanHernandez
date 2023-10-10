@@ -19,7 +19,7 @@ const RouteIndex = () => {
       <BrowserRouter>
         <NavBar />
         <Routes>
-          <Route path="/" element={<ItemListContainers />} />
+          <Route path="/" element={<ItemListContainers />  } exact  />
           <Route path="/categoria/:categoria" element={<ItemListContainers />} />
           <Route path="/id/:id" element={<ItemDetailContainer />} />
           <Route path="/carrito" element={<Order />} />

@@ -9,7 +9,7 @@ const NavBar = () => {
     <div className="d-flex justify-content-between align-items-center bg-body-tertiary">
       <Navbar expand="lg" className="bg-body-tertiary ">
         <Container className="d-flex justify-content-between">
-          <Link className={`${styles['Link']} m-2`} to="/">SHOP</Link>
+          <Link className={`${styles['Link']} m-2`} to="/categoria/SHOP">SHOP</Link>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">

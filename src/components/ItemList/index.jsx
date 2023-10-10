@@ -19,16 +19,30 @@ const itemList = ({ productos }) => {
     }, [productos])
 
     useEffect(() => {
-        const productFilter = query(
-            collection(db, "products"),
-            where("category", "==", `${categoria}`),
-        )
-        const dataFilter = async () => {
-            const data = await getDocs(productFilter)
-            const dataFilter = data.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
-            dataFilter.length > 0 && setItems(dataFilter) 
-        }
-        dataFilter()
+        if (categoria === "SHOP") {
+            const productFilter = query(
+                collection(db, "products"),
+            )
+            const dataFilter = async () => {
+                const data = await getDocs(productFilter)
+                const dataFilter = data.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
+                dataFilter.length > 0 && setItems(dataFilter) 
+            }
+            dataFilter()
+       }
+       else{
+            const productFilter = query(
+                collection(db, "products"),
+                where("category", "==", `${categoria}`),
+            )
+            const dataFilter = async () => {
+                const data = await getDocs(productFilter)
+                const dataFilter = data.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
+                dataFilter.length > 0 && setItems(dataFilter) 
+            }
+            dataFilter()
+       }
+        console.log(categoria)
     }, [categoria])
 
     return (
